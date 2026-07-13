@@ -1,0 +1,36 @@
+name: .NET Console CI
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'dotnet-console-app/**'
+      - '.github/workflows/dotnet-console.yml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'dotnet-console-app/**'
+      - '.github/workflows/dotnet-console.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-run:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore dotnet-console-app/dotnet-console-app.csproj
+
+      - name: Build application
+        run: dotnet build dotnet-console-app/dotnet-console-app.csproj --configuration Release --no-restore
+
+      - name: Run application
+        run: dotnet run --project dotnet-console-app/dotnet-console-app.csproj --configuration Release --no-build
