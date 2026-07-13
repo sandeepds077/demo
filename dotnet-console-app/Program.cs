@@ -1,26 +1,34 @@
 using System;
 
-var calculator = new Calculator();
+var taskManager = new TaskManager();
 
-Console.WriteLine("Simple .NET calculator demo");
-Console.WriteLine("==========================");
-Console.WriteLine($"Sum of 10 and 25: {calculator.Add(10, 25)}");
-Console.WriteLine($"Difference of 50 and 18: {calculator.Subtract(50, 18)}");
-Console.WriteLine($"Product of 6 and 7: {calculator.Multiply(6, 7)}");
-Console.WriteLine($"Quotient of 81 and 9: {calculator.Divide(81, 9)}");
+Console.WriteLine("Task Tracker Demo");
+Console.WriteLine("=================");
+Console.WriteLine($"Pending tasks: {taskManager.GetPendingTaskCount()}");
+Console.WriteLine($"Completed tasks: {taskManager.GetCompletedTaskCount()}");
+Console.WriteLine($"Next task: {taskManager.GetNextTask()}");
 
-public class Calculator
+public class TaskManager
 {
-    public int Add(int a, int b) => a + b;
-    public int Subtract(int a, int b) => a - b;
-    public int Multiply(int a, int b) => a * b;
-    public double Divide(double a, double b)
+    private readonly List<string> _tasks = new()
     {
-        if (b == 0)
-        {
-            throw new DivideByZeroException("Cannot divide by zero.");
-        }
+        "Review pull request",
+        "Write unit tests",
+        "Deploy to staging"
+    };
 
-        return a / b;
+    private readonly HashSet<string> _completedTasks = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "Write unit tests"
+    };
+
+    public int GetPendingTaskCount() => _tasks.Count(t => !_completedTasks.Contains(t));
+
+    public int GetCompletedTaskCount() => _completedTasks.Count;
+
+    public string GetNextTask()
+    {
+        var pending = _tasks.FirstOrDefault(t => !_completedTasks.Contains(t));
+        return pending ?? "No pending tasks";
     }
 }
