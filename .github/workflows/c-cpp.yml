@@ -10,6 +10,7 @@ jobs:
 
     runs-on:
       - self-hosted
+      - linux-agent
       - linux
       - ec2
 
