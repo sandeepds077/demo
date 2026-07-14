@@ -1,0 +1,28 @@
+name: Build application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on:
+      - self-hosted
+      - linux
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Verify Runner
+        run: |
+          hostname
+          whoami
+          pwd
+        
+      - name: Build Application
+        run: |
+          echo "Building the application..."
+          # Add your build commands here
+          # For example, if you're using Maven:
+          # mvn clean install 
