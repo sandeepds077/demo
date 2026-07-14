@@ -24,20 +24,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+      - name: Use preinstalled Python
+        run: |
+          python3 --version
+          which python3
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
 
       - name: Verify environment
         run: |
           echo "Runner OS: $RUNNER_OS"
-          python --version
+          python3 --version
           echo "APP_NAME=$APP_NAME"
           echo "ENVIRONMENT=$ENVIRONMENT"
           echo "FEATURE_FLAG=$FEATURE_FLAG"
@@ -47,4 +47,4 @@ jobs:
 
       - name: Run Python app
         run: |
-          python app.py
+          python3 app.py
