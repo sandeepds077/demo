@@ -9,10 +9,10 @@ on:
 env:
   APP_NAME: demo-python-app
   ENVIRONMENT: testing
-  FEATURE_FLAG: ${{ vars.FEATURE_FLAG }}
-  LOG_LEVEL: ${{ vars.LOG_LEVEL }}
-  API_TOKEN: ${{ secrets.API_TOKEN }}
-  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  FEATURE_FLAG: ${{ vars.FEATURE_FLAG || 'false' }}
+  LOG_LEVEL: ${{ vars.LOG_LEVEL || 'info' }}
+  API_TOKEN: ${{ secrets.API_TOKEN || '' }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD || '' }}
 
 jobs:
   build:
