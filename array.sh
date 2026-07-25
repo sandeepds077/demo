@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 args=("$@")
 
-echo "atguments using \$@:"
-
-echo "${args[@]}"
-
+echo "arguments using \$@:"
+for arg in "${args[@]}"; do
+  echo "$arg"
+done
